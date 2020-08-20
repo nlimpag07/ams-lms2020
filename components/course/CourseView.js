@@ -88,6 +88,8 @@ const framerEffect = {
     },
   },
 };
+const apiBaseUrl = process.env.apiBaseUrl;
+const token = Cookies.get("token");
 const apidirectoryUrl = process.env.directoryUrl;
 const homeUrl = process.env.homeUrl;
 const linkUrl = Cookies.get("usertype");
@@ -95,28 +97,44 @@ const linkUrl = Cookies.get("usertype");
 const CourseView = ({ course_id }) => {
   var [courseId, setCourseId] = useState(course_id);
  
-  const { courseAllList } = useCourseList();
+  /* const { courseAllList } = useCourseList(); */
   const [course, setCourse] = useState("");
   const [modal2Visible, setModal2Visible] = useState("");
-  var courseData = "";
   const [loading, setLoading] = useState(true);
-  /* console.log("course_id ? ", course_id);
-  console.log("courseId ? ", courseId); */
-  /* if (courseAllList) {
-    courseData = courseAllList.filter((getCourse) => getCourse.id == course_id);
-  } */
+  const [courseData, setCourseData] = useState([]);
 
-  //console.log("Default getting CourseData ", courseData);
+
   useEffect(() => {
     setCourseId(course_id);
-    //if (!courseData) {
     let allCourse = JSON.parse(localStorage.getItem("courseAllList"));
     //console.log(userData);
     setCourse(allCourse.filter((getCourse) => getCourse.id == course_id));
-    /* } else {
-      //put additional Filtration here
-      setCourse(courseData);
-    } */
+    
+    /* var data = JSON.stringify({});
+    var config = {
+      method: "get",
+      url: apiBaseUrl + "/courseoutline",
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      }
+    };
+    async function fetchData(config) {
+      const response = await axios(config);
+      if (response) {
+        localStorage.setItem("courseAllList", JSON.stringify(response.data));
+        setCourseAllList(response.data);
+        //console.log(response.data);
+      } else {
+        const userData = JSON.parse(localStorage.getItem("courseAllList"));
+        setCourseAllList(userData);
+      }
+    }
+    fetchData(
+      config
+    ); */
+
+
     setLoading(false);
 
     //return (() => setCourseId(course_id))
@@ -284,7 +302,7 @@ const CourseView = ({ course_id }) => {
                   <CourseOverviewWidget course_details={courseDetails} />
                 </TabPane>
                 <TabPane tab="COURSE OUTLINE" key="2">
-                  <CourseOutlineviewWidget course_details={courseDetails} />
+                  <CourseOutlineviewWidget course_id={courseDetails.id} />
                 </TabPane>
                 <TabPane tab="LEARNING OUTCOMES" key="3">
                   <CourseLearninOutcomesviewWidget

@@ -3,22 +3,30 @@ import ReactDOM from "react-dom";
 import { Row, Col, Steps, Timeline, Collapse } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import Cookies from "js-cookie";
+import axios from "axios";
+
+
 const { Step } = Steps;
 const { Panel } = Collapse;
-const CourseOutlineviewWidget = ({ course_details }) => {
+
+const CourseOutlineviewWidget = ({ course_id }) => {
   /* var [courseId, setCourseId] = useState(course_id);
   const homeUrl = process.env.homeUrl;
   const { courseAllList } = useCourseList();
   const [course, setCourse] = useState("");
   const [modal2Visible, setModal2Visible] = useState("");
   var courseData = ""; */
-  const { relatedCourse, description, courseInstructor } = course_details;
+  //const { relatedCourse, description, courseInstructor } = course_details;
   //console.log(course_details);
   const [current, setCurrent] = useState(0);
 
-  /* useEffect(() => {
-    setFullDetails("shown");
-  }, [current]); */
+  useEffect(() => {
+    console.log(course_id)
+
+    
+
+  }, []);
 
   const onChange = (current) => {
     //console.log("onChange:", current);
